@@ -1,5 +1,16 @@
 <!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Beth & Joe's Wedding</title>
@@ -64,13 +75,14 @@
     }
   </style>
 </head>
+
 <body>
 
   <h1>Beth & Joe’s wedding</h1>
   <p>Sweet message about how happy you are that your guests are here</p>
 
   <label class="upload-btn">
-    <img src="https://img.icons8.com/ios-filled/50/upload-to-cloud.png" alt="upload icon"/>
+    <img src="https://img.icons8.com/ios-filled/50/upload-to-cloud.png" alt="upload icon" />
     Upload photos
     <input type="file" id="fileInput" accept="image/*" onchange="uploadImage()">
   </label>
@@ -86,24 +98,21 @@
       messagingSenderId: "SENDER_ID",
       appId: "APP_ID"
     };
-
     firebase.initializeApp(firebaseConfig);
     const storage = firebase.storage();
     const db = firebase.firestore();
-
     async function uploadImage() {
       const fileInput = document.getElementById("fileInput");
       const file = fileInput.files[0];
       if (!file) return;
-
       const storageRef = storage.ref('wedding-photos/' + Date.now() + '-' + file.name);
       await storageRef.put(file);
       const url = await storageRef.getDownloadURL();
-      await db.collection("photos").add({ url });
-
+      await db.collection("photos").add({
+        url
+      });
       loadGallery(); // Refresh
     }
-
     async function loadGallery() {
       const snapshot = await db.collection("photos").orderBy("url").get();
       const gallery = document.getElementById("gallery");
@@ -114,10 +123,12 @@
         gallery.appendChild(img);
       });
     }
-
     loadGallery();
   </script>
 </body>
+
 </html>
-
-
+<!-- partial -->
+  
+</body>
+</html>
